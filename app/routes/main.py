@@ -1,35 +1,78 @@
 from flask import Blueprint, request, jsonify
-from app.models import classify_wine_quality
+from app.models import classify_wine_quality, predict_car_price, movie_recomendation
 
-
-bp = Blueprint('main', __name__)
-
-
+bp = Blueprint('bp', __name__)
 
 
 @bp.route('/')
 def index():
     return 'Hola, mundo!'
 
-# use postman -> body -> raw -> json
+
+# example: use postman -> body -> raw -> json
 # wine data from request
 # {
 #     'volatile acidity': 0.66,
 #     'chlorides': 0.029,
 #     'free sulfur dioxide': 29,
 #     'density': 0.9892,
-#     'alcohol': 12.8}
+#     'alcohol': 12.8
+#     }
 @bp.route('/model/wine', methods=['POST'])
-def predict():
-    input_data = request.get_json()
-    # print(input_data)
-    # procesar entrada del usuario y ejecutar modelo
-    wine_quality = classify_wine_quality(input_data)
+def wine_classifier():
+    try:
+        input_data = request.get_json()
+        # print(input_data)
+        # process user input and execute model
+        wine_quality = classify_wine_quality(input_data)
 
-    # Por ahora, respondemos con datos quemados
-    output_data = {
-        'predicción': 'sí',
-        'calidad': str(wine_quality)
-    }
+        output_data = {
+            'result': 'ok',
+            'quality': str(wine_quality)
+        }
 
-    return jsonify(output_data)
+        return jsonify(output_data)
+    except Exception as e:
+        # error
+        return jsonify({'error': str(e)}), 400
+
+
+@bp.route('/model/car', methods=['POST'])
+def car_prediction():
+    try:
+        input_data = request.get_json()
+        # print(input_data)
+        # process user input and execute model
+        car_price = predict_car_price(input_data)
+
+        output_data = {
+            'result': 'ok',
+            'price': str(car_price)
+        }
+
+        return jsonify(output_data)
+    except Exception as e:
+        # error
+        return jsonify({'error': str(e)}), 400
+
+
+@bp.route('/model/movie', methods=['POST'])
+def movie_recommendation():
+    try:
+        input_data = request.get_json()
+
+        # print(input_data)
+        # process user input and execute model
+        movie_title = input_data['movie_title']
+        movies = movie_recomendation(movie_title)
+
+        # convert list to str
+        output_data = {
+            'result': 'ok',
+            'movies': str(movies)
+        }
+
+        return jsonify(output_data)
+    except Exception as e:
+        # error
+        return jsonify({'error': str(e)}), 400
