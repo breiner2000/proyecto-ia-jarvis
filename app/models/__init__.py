@@ -11,6 +11,9 @@ car_model_path = os.path.join(os.path.dirname(__file__), 'car_price', 'car_price
 
 movie_model_path = os.path.join(os.path.dirname(__file__), 'movie_recommendation', 'movie_recommendation_trained.joblib')
 
+fat_model_path = os.path.join(os.path.dirname(__file__), 'fat_percentage', 'fat_trained.joblib')
+
+
 # get complete route from the csv files
 user_movie_matrix_path = os.path.join(os.path.dirname(__file__), 'movie_recommendation', 'user_movie_matrix.csv')
 
@@ -65,6 +68,21 @@ def movie_recomendation(movie_title):
             print(f"{i}: {recommended_movie_title} - {distance}")
 
         return recommendations
+    except Exception as e:
+        # error
+        return f"error: {e}"
+
+
+def predict_fat_percentage(fat_dict):
+    try:
+        # load the trained model
+        rfc = load(fat_model_path)
+        new_data = pd.DataFrame(fat_dict)
+        data_new = new_data.values
+
+        fat_predict = rfc.predict(data_new)
+        print('El % de grasa corporal es:', fat_predict)
+        return fat_predict
     except Exception as e:
         # error
         return f"error: {e}"
