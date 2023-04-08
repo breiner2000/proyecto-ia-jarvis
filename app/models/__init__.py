@@ -13,6 +13,9 @@ movie_model_path = os.path.join(os.path.dirname(__file__), 'movie_recommendation
 
 fat_model_path = os.path.join(os.path.dirname(__file__), 'fat_percentage', 'fat_trained.joblib')
 
+churn_model_path = os.path.join(os.path.dirname(__file__), 'churn_predict', 'churn_trained.joblib')
+
+avocado_model_path = os.path.join(os.path.dirname(__file__), 'avocado_price', 'avocado_price_trained.joblib')
 
 # get complete route from the csv files
 user_movie_matrix_path = os.path.join(os.path.dirname(__file__), 'movie_recommendation', 'user_movie_matrix.csv')
@@ -83,6 +86,37 @@ def predict_fat_percentage(fat_dict):
         fat_predict = rfc.predict(data_new)
         print('El % de grasa corporal es:', fat_predict)
         return fat_predict
+    except Exception as e:
+        # error
+        return f"error: {e}"
+
+
+def predict_churn(churn_dict):
+    try:
+
+        churn_model = load(churn_model_path)
+        churn_data = pd.DataFrame(churn_dict)
+        churn_predict = churn_model.predict(churn_data)
+
+        if churn_predict == 0:
+            return "El usuario no es propenso a cambiar de compañia"
+        else:
+            return "La persona sí es propensa a cambiar de compañía"
+
+    except Exception as e:
+        # error
+        return f"error: {e}"
+
+
+def predict_avocado_price(avocado_dict):
+    try:
+        # load the trained model
+        avocado_model = load(avocado_model_path)
+        new_data = pd.DataFrame(avocado_dict)
+
+        avocado_price_predict = avocado_model.predict(new_data)
+        print('El precio promedio es:', avocado_price_predict)
+        return 'El precio promedio es de ' + str(round(avocado_price_predict[0], 2))
     except Exception as e:
         # error
         return f"error: {e}"

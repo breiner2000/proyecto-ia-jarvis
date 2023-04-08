@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score
+from joblib import dump, load
 
 # Cargar el conjunto de datos
 url = "https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv"
@@ -62,8 +63,11 @@ model.fit(X_train, y_train)
 # Predecir los valores de salida con los datos de prueba
 y_pred = model.predict(X_test)
 
-# Calcular la precisión del modelo
 
+# save the trained model into a file
+dump(model, 'churn_trained.joblib')
+
+# Calcular la precisión del modelo
 accuracy = accuracy_score(y_test, y_pred)
 print("Precisión del modelo: {:.2f}%".format(accuracy * 100))
 
@@ -86,10 +90,8 @@ print("Precisión del modelo: {:.2f}%".format(accuracy * 100))
 # 'PaymentMethod': ['Bank transfer (automatic)', 'Credit card (automatic)','Electronic check', 'Mailed check']
 # 'Churn': ['No', 'Yes']
 
-
-
 new_data = pd.DataFrame({
-    "gender" :[0],
+    "gender":[0],
     "SeniorCitizen":[0],
     "Partner":[0],
     "Dependents":[0],
@@ -114,7 +116,7 @@ new_data = pd.DataFrame({
 # Hacer la predicción
 prediction = model.predict(new_data)
 
-if (prediction == 0):
+if prediction == 0:
     print("La persona no es propensa a cambiar de compañía")
 else:
     print("La persona sí es propensa a cambiar de compañía")

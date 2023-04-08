@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.models import classify_wine_quality, predict_car_price, movie_recomendation, predict_fat_percentage
+from app.models import classify_wine_quality, predict_car_price, movie_recomendation, predict_fat_percentage, predict_churn, predict_avocado_price
 import pandas as pd
 
 bp = Blueprint('bp', __name__)
@@ -89,6 +89,42 @@ def fat_prediction():
         output_data = {
             'result': 'ok',
             'fat_%': str(fat_predict)
+        }
+
+        return jsonify(output_data)
+    except Exception as e:
+        # error
+        return jsonify({'error': str(e)}), 400
+
+
+@bp.route('/model/churn', methods=['POST'])
+def churn_prediction():
+    try:
+        input_data = request.get_json()
+        churn_predict = predict_churn(input_data)
+
+        # convert list to str
+        output_data = {
+            'result': 'ok',
+            'churn': str(churn_predict)
+        }
+
+        return jsonify(output_data)
+    except Exception as e:
+        # error
+        return jsonify({'error': str(e)}), 400
+
+
+@bp.route('/model/avocado', methods=['POST'])
+def avocado_prediction():
+    try:
+        input_data = request.get_json()
+        avocado_price_predict = predict_avocado_price(input_data)
+
+        # convert list to str
+        output_data = {
+            'result': 'ok',
+            'price': str(avocado_price_predict)
         }
 
         return jsonify(output_data)

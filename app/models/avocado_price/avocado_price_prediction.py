@@ -10,6 +10,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score
+from joblib import dump, load
 
 # Cargamos los datos en un DataFrame de Pandas
 df = pd.read_csv('../../data/avocado_data/avocado.csv')
@@ -49,6 +50,8 @@ model = Pipeline(steps=[('preprocessor', preprocessor),
 
 # Entrenamos el modelo con los datos de entrenamiento
 model.fit(X_train, y_train)
+
+dump(model, 'avocado_price_trained.joblib')
 
 # Evaluamos el modelo con los datos de prueba
 y_pred = model.predict(X_test)
