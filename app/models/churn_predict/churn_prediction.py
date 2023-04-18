@@ -71,25 +71,6 @@ dump(model, 'churn_trained.joblib')
 accuracy = accuracy_score(y_test, y_pred)
 print("Precisión del modelo: {:.2f}%".format(accuracy * 100))
 
-
-
-# 'gender': ['Female', 'Male']
-# 'Partner': ['No', 'Yes']
-# 'Dependents': ['No', 'Yes']
-# 'PhoneService': ['No', 'Yes']
-# 'MultipleLines': ['No', 'Yes']
-# 'InternetService': ['DSL', 'Fiber optic', 'No']
-# 'OnlineSecurity': ['No', 'Yes']
-# 'OnlineBackup': ['No', 'Yes']
-# 'DeviceProtection': ['No', 'Yes']
-# 'TechSupport': ['No', 'Yes']
-# 'StreamingTV': ['No', 'Yes']
-# 'StreamingMovies': ['No', 'Yes']
-# 'Contract': ['Month-to-month', 'One year', 'Two year']
-# 'PaperlessBilling': ['No', 'Yes']
-# 'PaymentMethod': ['Bank transfer (automatic)', 'Credit card (automatic)','Electronic check', 'Mailed check']
-# 'Churn': ['No', 'Yes']
-
 new_data = pd.DataFrame({
     "gender":[0],
     "SeniorCitizen":[0],
