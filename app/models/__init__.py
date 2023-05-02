@@ -85,7 +85,7 @@ def predict_fat_percentage(fat_dict):
 
         fat_predict = rfc.predict(data_new)
         print('El % de grasa corporal es:', fat_predict)
-        return fat_predict
+        return "El porcentaje de grasa es " + str(int(fat_predict)) + "%"
     except Exception as e:
         # error
         return f"error: {e}"
@@ -116,7 +116,7 @@ def predict_avocado_price(avocado_dict):
 
         avocado_price_predict = avocado_model.predict(new_data)
         print('El precio promedio es:', avocado_price_predict)
-        return 'El precio promedio es de ' + str(round(avocado_price_predict[0], 2))
+        return 'El precio promedio es de ' + str(round(avocado_price_predict[0], 2)) + ' dolares'
     except Exception as e:
         # error
         return f"error: {e}"
