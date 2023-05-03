@@ -5,17 +5,16 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import LabelEncoder
+
 from sklearn.metrics import accuracy_score
 from joblib import dump, load
 
 # Cargar el conjunto de datos
 url = "https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv"
 data = pd.read_csv(url)
-
-# Visualizar los primeros registros
-data.head()
 
 # Eliminar la columna "customerID" ya que no aporta información relevante
 data = data.drop('customerID', axis=1)
@@ -43,10 +42,17 @@ cat_cols = ['gender', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines',
 for col in cat_cols:
     data[col] = le.fit_transform(data[col])
 
+#Deshacerse de las variables inecesarias
+data = data.drop(['gender', 'PhoneService', 'InternetService', 'OnlineBackup',
+                  'StreamingTV', 'StreamingMovies', 'DeviceProtection',
+                  'MultipleLines','PaymentMethod','Partner','SeniorCitizen',
+                  'Dependents', 'TechSupport'], axis=1)
+
 
 # Separar las variables de entrada y salida
 X = data.drop('Churn', axis=1)
 y = data['Churn']
+
 
 
 # Dividir los datos en conjuntos de entrenamiento y prueba
@@ -63,7 +69,6 @@ model.fit(X_train, y_train)
 # Predecir los valores de salida con los datos de prueba
 y_pred = model.predict(X_test)
 
-
 # save the trained model into a file
 dump(model, 'churn_trained.joblib')
 
@@ -72,25 +77,12 @@ accuracy = accuracy_score(y_test, y_pred)
 print("Precisión del modelo: {:.2f}%".format(accuracy * 100))
 
 new_data = pd.DataFrame({
-    "gender":[0],
-    "SeniorCitizen":[0],
-    "Partner":[0],
-    "Dependents":[0],
-    "tenure":[2],
-    "PhoneService":[1],
-    "MultipleLines":[0],
-    "InternetService":[1],
-    "OnlineSecurity":[0],
-    "OnlineBackup":[0],
-    "DeviceProtection":[0],
-    "TechSupport":[0],
-    "StreamingTV":[0],
-    "StreamingMovies":[0],
-    "Contract":[0],
-    "PaperlessBilling":[1],
-    "PaymentMethod":[2],
-    "MonthlyCharges":[70],
-    "TotalCharges":[151]
+    "tenure": [2],
+    "OnlineSecurity": [0],
+    "Contract": [0],
+    "PaperlessBilling": [1],
+    "MonthlyCharges": [70],
+    "TotalCharges": [151]
 })
 
 
