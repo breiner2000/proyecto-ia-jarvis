@@ -9,6 +9,9 @@ wine_model_path = os.path.join(os.path.dirname(__file__), 'wine_quality', 'wine_
 
 car_model_path = os.path.join(os.path.dirname(__file__), 'car_price', 'car_price_trained.joblib')
 
+# get complete route from the csv files
+user_movie_matrix_path = os.path.join(os.path.dirname(__file__), 'movie_recommendation', 'user_movie_matrix.csv')
+
 movie_model_path = os.path.join(os.path.dirname(__file__), 'movie_recommendation', 'movie_recommendation_trained.joblib')
 
 fat_model_path = os.path.join(os.path.dirname(__file__), 'fat_percentage', 'fat_trained.joblib')
@@ -17,8 +20,7 @@ churn_model_path = os.path.join(os.path.dirname(__file__), 'churn_predict', 'chu
 
 avocado_model_path = os.path.join(os.path.dirname(__file__), 'avocado_price', 'avocado_price_trained.joblib')
 
-# get complete route from the csv files
-user_movie_matrix_path = os.path.join(os.path.dirname(__file__), 'movie_recommendation', 'user_movie_matrix.csv')
+walmart_model_path = os.path.join(os.path.dirname(__file__), 'walmart_sales', 'walmart_sales_trained.joblib')
 
 
 def classify_wine_quality(wine_dict):
@@ -120,3 +122,19 @@ def predict_avocado_price(avocado_dict):
     except Exception as e:
         # error
         return f"error: {e}"
+
+
+def predict_walmart_sales(walmart_dict):
+    try:
+        # load the trained model
+        walmart_model = load(walmart_model_path)
+        new_data = pd.DataFrame(walmart_dict)
+
+        walmart_sales = walmart_model.predict(new_data)
+        print('Las ventas del departamento son: ', walmart_sales)
+        return 'Las ventas del departamento son: ' + str(round(walmart_sales[0], 2)) + ' dolares'
+
+    except Exception as e:
+        # error
+        return f"error: {e}"
+
