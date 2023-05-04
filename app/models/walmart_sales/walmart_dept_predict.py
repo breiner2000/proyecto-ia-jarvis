@@ -1,19 +1,11 @@
 import pandas as pd
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 from joblib import dump, load  # import dump functions and load for save and load the model
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import LabelEncoder
-
-from sklearn.metrics import accuracy_score
 
 # Cargar los datos
 data = pd.read_csv('../../data/walmart_data/walmartsales.csv')
