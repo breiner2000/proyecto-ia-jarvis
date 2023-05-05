@@ -41,7 +41,8 @@ def classify_wine_quality(wine_dict):
         # make the prediction
         wine_quality = rfc.predict(wine_df)
         print('La calidad estimada del vino es:', wine_quality)
-        return wine_quality
+        # return wine_quality
+        return 'La calidad estimada del vino es: ' + str(wine_quality)
     except Exception as e:
         # error
         return f"error: {e}"
@@ -54,7 +55,8 @@ def predict_car_price(car_dict):
         car_df = pd.DataFrame([car_dict])
         selling_price = rfc.predict(car_df)
         print('El precio de venta estimado es de:', selling_price)
-        return selling_price
+        return 'El precio de venta estimado es de: ' + str(selling_price)
+        # return selling_price
     except Exception as e:
         # error
         return f"error: {e}"
@@ -78,7 +80,8 @@ def movie_recomendation(movie_title):
             distance = distances.flatten()[i]
             print(f"{i}: {recommended_movie_title} - {distance}")
 
-        return recommendations
+        str_arr = ', '.join(str(i) for i in recommendations)
+        return 'Las películas recomendadas son: ' + str_arr
     except Exception as e:
         # error
         return f"error: {e}"

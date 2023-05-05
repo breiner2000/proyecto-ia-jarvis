@@ -186,7 +186,7 @@ def hepatitis_prediction():
         return jsonify({'error': str(e)}), 400
 
 @bp.route('/model/covid19', methods=['POST'])
-def hepatitis_prediction():
+def covid_prediction():
     try:
         input_data = request.get_json()
         covid19_prediction_result = predict_covid19(input_data)
