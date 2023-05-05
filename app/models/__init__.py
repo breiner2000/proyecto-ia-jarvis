@@ -24,7 +24,7 @@ walmart_model_path = os.path.join(os.path.dirname(__file__), 'walmart_sales', 'w
 
 airlines_path = os.path.join(os.path.dirname(__file__), 'airlines_delay', 'airlines_trained.joblib')
 
-covid19_path = os.path.join(os.path.dirname(__file__), 'covid_19', 'covid19_trained.joblib')
+covid19_path = os.path.join(os.path.dirname(__file__), 'covid19_predict', 'covid19_trained.joblib')
 
 hepatitis_path = os.path.join(os.path.dirname(__file__), 'hepatitis_predict', 'hepatitis_trained.joblib')
 
@@ -205,6 +205,7 @@ def predict_covid19(covid19_dict):
         rounded_num = round(int(covid19_predict))
 
         print(f'Posibles cantidad de defunciones: {rounded_num})')
+        return f'Posible cantidad de defunciones: {rounded_num}'
     except Exception as e:
         # error
         return f"error: {e}"

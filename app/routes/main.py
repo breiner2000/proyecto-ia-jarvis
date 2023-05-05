@@ -30,7 +30,7 @@ def wine_classifier():
 
         output_data = {
             'result': 'ok',
-            'quality': str(wine_quality)
+            'resp': str(wine_quality)
         }
 
         return jsonify(output_data)
@@ -49,7 +49,7 @@ def car_prediction():
 
         output_data = {
             'result': 'ok',
-            'price': str(car_price)
+            'resp': str(car_price)
         }
 
         return jsonify(output_data)
@@ -71,7 +71,7 @@ def movie_recommendation():
         # convert list to str
         output_data = {
             'result': 'ok',
-            'movies': str(movies)
+            'resp': str(movies)
         }
 
         return jsonify(output_data)
@@ -89,7 +89,7 @@ def fat_prediction():
         # convert list to str
         output_data = {
             'result': 'ok',
-            'fat_%': str(fat_predict)
+            'resp': str(fat_predict)
         }
 
         return jsonify(output_data)
@@ -107,7 +107,7 @@ def churn_prediction():
         # convert list to str
         output_data = {
             'result': 'ok',
-            'churn': str(churn_predict)
+            'resp': str(churn_predict)
         }
 
         return jsonify(output_data)
@@ -125,7 +125,7 @@ def avocado_prediction():
         # convert list to str
         output_data = {
             'result': 'ok',
-            'price': str(avocado_price_predict)
+            'resp': str(avocado_price_predict)
         }
 
         return jsonify(output_data)
@@ -143,7 +143,7 @@ def walmart_sales_prediction():
         # convert list to str
         output_data = {
             'result': 'ok',
-            'price': str(walmart_sales_predict)
+            'resp': str(walmart_sales_predict)
         }
 
         return jsonify(output_data)
@@ -160,7 +160,7 @@ def airlines_prediction():
         # convert list to str
         output_data = {
             'result': 'ok',
-            'price': str(airlane_predict_result)
+            'resp': str(airlane_predict_result)
         }
 
         return jsonify(output_data)
@@ -177,7 +177,7 @@ def hepatitis_prediction():
         # convert list to str
         output_data = {
             'result': 'ok',
-            'price': str(hepatitis_prediction_result)
+            'resp': str(hepatitis_prediction_result)
         }
 
         return jsonify(output_data)
@@ -194,10 +194,12 @@ def covid_prediction():
         # convert list to str
         output_data = {
             'result': 'ok',
-            'price': str(covid19_prediction_result)
+            'resp': str(covid19_prediction_result)
         }
 
         return jsonify(output_data)
     except Exception as e:
+
         # error
         return jsonify({'error': str(e)}), 400
+        # return output_data
