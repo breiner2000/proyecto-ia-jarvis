@@ -22,11 +22,11 @@ avocado_model_path = os.path.join(os.path.dirname(__file__), 'avocado_price', 'a
 
 walmart_model_path = os.path.join(os.path.dirname(__file__), 'walmart_sales', 'walmart_sales_trained.joblib')
 
-airlines_path = os.path.join(os.path.dirname(__file__), 'airlines', 'airlines_trained.joblib')
+airlines_path = os.path.join(os.path.dirname(__file__), 'airlines_delay', 'airlines_trained.joblib')
 
 covid19_path = os.path.join(os.path.dirname(__file__), 'covid_19', 'covid19_trained.joblib')
 
-hepatitis_path = os.path.join(os.path.dirname(__file__), 'hepatitis', 'fat_trained.joblib')
+hepatitis_path = os.path.join(os.path.dirname(__file__), 'hepatitis_predict', 'hepatitis_trained.joblib')
 
 
 def classify_wine_quality(wine_dict):
@@ -156,12 +156,15 @@ def predict_airlane_delay(airlines_dict):
 
         airline_predict = rfc.predict(data_new)
         rounded_num = round(int(airline_predict))
-        if rounded_num == -1:
+        if rounded_num <= -1:
             print('Llegada temprana')
+            return 'Llegada temprana'
         elif rounded_num == 0:
             print('Llegada exacta')
-        elif rounded_num == 1:
+            return 'Llegada exacta'
+        elif rounded_num >= 1:
             print('Llegada tardía')
+            return 'Llegada tardía'
     except Exception as e:
         # error
         return f"error: {e}"
@@ -186,6 +189,7 @@ def predict_hepatitis(hepatitis_dict):
             categoria_str = 'Cirrosis'
 
         print(f'La persona pertenece a la categoría: {categoria_str})')
+        return 'La persona pertenece a la categoría: ' + categoria_str
     except Exception as e:
         # error
         return f"error: {e}"

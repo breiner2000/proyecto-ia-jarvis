@@ -5,7 +5,6 @@ from sklearn.model_selection import train_test_split
 from joblib import dump
 
 covid_df = pd.read_csv('../../data/covid_19_data/covid_19_data.csv')
-
 # Borra las columnas innecesarias
 covid_df = covid_df.drop(['Province/State','Country/Region','SNo', 'ObservationDate', 'Last Update'], axis=1)
 
