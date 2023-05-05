@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app.models import classify_wine_quality, predict_car_price, movie_recomendation, predict_fat_percentage,\
-    predict_churn, predict_avocado_price, predict_walmart_sales
+    predict_churn, predict_avocado_price, predict_walmart_sales, predict_airlane_delay, predict_hepatitis, predict_covid19
 import pandas as pd
 
 bp = Blueprint('bp', __name__)
@@ -144,6 +144,57 @@ def walmart_sales_prediction():
         output_data = {
             'result': 'ok',
             'price': str(walmart_sales_predict)
+        }
+
+        return jsonify(output_data)
+    except Exception as e:
+        # error
+        return jsonify({'error': str(e)}), 400
+
+@bp.route('/model/airlane', methods=['POST'])
+def airlines_prediction():
+    try:
+        input_data = request.get_json()
+        airlane_predict_result = predict_airlane_delay(input_data)
+
+        # convert list to str
+        output_data = {
+            'result': 'ok',
+            'price': str(airlane_predict_result)
+        }
+
+        return jsonify(output_data)
+    except Exception as e:
+        # error
+        return jsonify({'error': str(e)}), 400
+
+@bp.route('/model/hepatitis', methods=['POST'])
+def hepatitis_prediction():
+    try:
+        input_data = request.get_json()
+        hepatitis_prediction_result = predict_hepatitis(input_data)
+
+        # convert list to str
+        output_data = {
+            'result': 'ok',
+            'price': str(hepatitis_prediction_result)
+        }
+
+        return jsonify(output_data)
+    except Exception as e:
+        # error
+        return jsonify({'error': str(e)}), 400
+
+@bp.route('/model/covid19', methods=['POST'])
+def hepatitis_prediction():
+    try:
+        input_data = request.get_json()
+        covid19_prediction_result = predict_covid19(input_data)
+
+        # convert list to str
+        output_data = {
+            'result': 'ok',
+            'price': str(covid19_prediction_result)
         }
 
         return jsonify(output_data)

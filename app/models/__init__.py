@@ -22,6 +22,12 @@ avocado_model_path = os.path.join(os.path.dirname(__file__), 'avocado_price', 'a
 
 walmart_model_path = os.path.join(os.path.dirname(__file__), 'walmart_sales', 'walmart_sales_trained.joblib')
 
+airlines_path = os.path.join(os.path.dirname(__file__), 'airlines', 'airlines_trained.joblib')
+
+covid19_path = os.path.join(os.path.dirname(__file__), 'covid_19', 'covid19_trained.joblib')
+
+hepatitis_path = os.path.join(os.path.dirname(__file__), 'hepatitis', 'fat_trained.joblib')
+
 
 def classify_wine_quality(wine_dict):
     try:
@@ -134,6 +140,64 @@ def predict_walmart_sales(walmart_dict):
         print('Las ventas del departamento son: ', walmart_sales)
         return 'Las ventas del departamento son: ' + str(round(walmart_sales[0], 2)) + ' dolares'
 
+    except Exception as e:
+        # error
+        return f"error: {e}"
+
+def predict_airlane_delay(airlines_dict):
+    try:
+        # load the trained model
+        rfc = load(airlines_path)
+        new_data = pd.DataFrame(airlines_dict)
+        data_new = new_data.values
+
+        airline_predict = rfc.predict(data_new)
+        rounded_num = round(int(airline_predict))
+        if rounded_num == -1:
+            print('Llegada temprana')
+        elif rounded_num == 0:
+            print('Llegada exacta')
+        elif rounded_num == 1:
+            print('Llegada tardía')
+    except Exception as e:
+        # error
+        return f"error: {e}"
+
+def predict_hepatitis(hepatitis_dict):
+    try:
+        # load the trained model
+        rfc = load(hepatitis_path)
+        new_data = pd.DataFrame(hepatitis_dict)
+        data_new = new_data.values
+
+        hepatitis_predict = rfc.predict(data_new)
+        rounded_num = round(int(hepatitis_predict)) % 4
+
+        if rounded_num == 0:
+            categoria_str = 'Donante de sangre'
+        elif rounded_num == 1:
+            categoria_str = 'Hepatitis'
+        elif rounded_num == 2:
+            categoria_str = 'Fibrosis'
+        else:
+            categoria_str = 'Cirrosis'
+
+        print(f'La persona pertenece a la categoría: {categoria_str})')
+    except Exception as e:
+        # error
+        return f"error: {e}"
+
+def predict_covid19(covid19_dict):
+    try:
+        # load the trained model
+        rfc = load(covid19_path)
+        new_data = pd.DataFrame(covid19_dict)
+        data_new = new_data.values
+
+        covid19_predict = rfc.predict(data_new)
+        rounded_num = round(int(covid19_predict))
+
+        print(f'Posibles cantidad de defunciones: {rounded_num})')
     except Exception as e:
         # error
         return f"error: {e}"
