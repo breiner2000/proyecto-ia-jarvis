@@ -26,7 +26,7 @@ airlines_path = os.path.join(os.path.dirname(__file__), 'airlines_delay', 'airli
 
 covid19_path = os.path.join(os.path.dirname(__file__), 'covid_19', 'covid19_trained.joblib')
 
-hepatitis_path = os.path.join(os.path.dirname(__file__), 'hepatitis', 'fat_trained.joblib')
+hepatitis_path = os.path.join(os.path.dirname(__file__), 'hepatitis_predict', 'hepatitis_trained.joblib')
 
 
 def classify_wine_quality(wine_dict):
@@ -189,6 +189,7 @@ def predict_hepatitis(hepatitis_dict):
             categoria_str = 'Cirrosis'
 
         print(f'La persona pertenece a la categoría: {categoria_str})')
+        return 'La persona pertenece a la categoría: ' + categoria_str
     except Exception as e:
         # error
         return f"error: {e}"
