@@ -91,6 +91,4 @@ dmypy.json
 
 
 app/models/movie_recommendation/user_movie_matrix.csv
-app/data/covid_19_data
 app/data/airlines_data
-app/data/hepatitis_data
