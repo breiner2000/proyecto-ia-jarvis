@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
 from joblib import load
-
+from keras.models import load_model
 import os
+from PIL import Image
 
 # get complete route from the file with the trained model
 wine_model_path = os.path.join(os.path.dirname(__file__), 'wine_quality', 'wine_quality_trained.joblib')
@@ -28,6 +29,38 @@ covid19_path = os.path.join(os.path.dirname(__file__), 'covid19_predict', 'covid
 
 hepatitis_path = os.path.join(os.path.dirname(__file__), 'hepatitis_predict', 'hepatitis_trained.joblib')
 
+authentication_path = os.path.join(os.path.dirname(__file__), 'auth_model', 'authentication_model.h5')
+
+
+def authentication_m(img):
+    try:
+        # load the trained model
+        model = load_model(authentication_path)
+
+        # Abrir la imagen utilizando PIL
+        image = Image.open(img)
+
+        # Preprocesar la imagen
+        x = image.resize((128, 128))
+        x = np.array(x)
+        x = np.expand_dims(x, axis=0)
+        x = x / 255.0  # Normalizar los valores de píxeles
+
+        # Realizar la predicción en la imagen de prueba
+        prediction = model.predict(x)
+        predicted_class = np.round(prediction).flatten()[0]
+        class_names = ['me', 'other']
+        predicted_class_name = class_names[int(predicted_class)]
+
+        # Mostrar el resultado de la predicción
+        if predicted_class_name == 'me':
+            return "Eres tú"
+        else:
+            return "No eres tú"
+
+    except Exception as e:
+        # error
+        return f"error: {e}"
 
 def classify_wine_quality(wine_dict):
     try:

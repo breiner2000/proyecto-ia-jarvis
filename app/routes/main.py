@@ -1,8 +1,10 @@
 from flask import Blueprint, request, jsonify
 from app.models import classify_wine_quality, predict_car_price, movie_recomendation, predict_fat_percentage,\
-    predict_churn, predict_avocado_price, predict_walmart_sales, predict_airlane_delay, predict_hepatitis, predict_covid19
+    predict_churn, predict_avocado_price, predict_walmart_sales, predict_airlane_delay, predict_hepatitis, predict_covid19, authentication_m
 import pandas as pd
 
+import base64
+import io
 bp = Blueprint('bp', __name__)
 
 
@@ -20,6 +22,22 @@ def index():
 #     'density': 0.9892,
 #     'alcohol': 12.8
 #     }
+
+@bp.route('/model/auth', methods=['POST'])
+def auth_resp():
+    try:
+        IMG = request.files['image']
+        auth = authentication_m(IMG)
+        output_data = {
+            'result': 'ok',
+            'resp': str(auth)
+        }
+        return jsonify(output_data)
+    except Exception as e:
+        # Manejar los errores según sea necesario
+        return jsonify({'error': str(e)}), 400
+
+
 @bp.route('/model/wine', methods=['POST'])
 def wine_classifier():
     try:
